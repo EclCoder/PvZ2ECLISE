@@ -1,0 +1,34 @@
+name: Download and Upload ECLISE
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  download-and-upload:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install gdown
+        run: |
+          python3 -m pip install --upgrade gdown
+
+      - name: Download files from Google Drive
+        run: |
+          gdown "1prh1-9eR1uhdIDEk3lLLwupl8l49TaSZ" \
+            -O ECLISE.apk
+
+          gdown "https://drive.usercontent.google.com/download?id=1hK35U5L8AfAO25aGt761vGqKnl89bVUb&export=download&authuser=0" \
+            -O main.337.com.ea.game.pvz2_ecl.obb
+
+      - name: Upload files to Draft Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload \
+            beta1.8 \
+            ECLISE.apk \
+            main.337.com.ea.game.pvz2_ecl.obb \
+            --repo "${{ github.repository }}"
