@@ -1,4 +1,4 @@
-name: Download ECL Beta APK
+name: Download ECL Beta 1.9
 
 on:
   workflow_dispatch:
@@ -18,7 +18,7 @@ jobs:
           import re
           import html
 
-          page_url = "https://www.mediafire.com/file/xz9p22me8e2ipbo/ECL_BETA_60FPS.apk/file"
+          page_url = "https://www.mediafire.com/file/el74v10jpurkfe8/main.337.com.ea.game.pvz2_ecl.obb/file"
 
           headers = {
               "User-Agent": (
@@ -78,15 +78,12 @@ jobs:
             --retry-delay 2 \
             -A "Mozilla/5.0" \
             "$URL" \
-            -o ECL_BETA_60FPS.apk
+            -o "main.337.com.ea.game.pvz2_ecl.obb"
 
-          ls -lh ECL_BETA_60FPS.apk
-          file ECL_BETA_60FPS.apk
-
-      - name: Upload APK to Draft Release
+      - name: Upload file to Draft Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release upload v1.9 \
-            ECL_BETA_60FPS.apk \
+            main.337.com.ea.game.pvz2_ecl.obb \
             --repo "${{ github.repository }}"
